@@ -1,0 +1,120 @@
+body {
+    background: #222;
+}
+
+.container {
+    width: fit-content;
+    margin: 30px auto 0;
+    text-align: center;
+    border-radius: 20px;
+    padding: 40px 35px;
+    background: linear-gradient(135deg, #00feba, #5b548a);
+    color: #fff;
+    font-family: Comfortaa ;  /* Rockwell */
+}
+
+.search {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.search input {
+    border: 0;
+    outline: 0;
+    background: #ebfffc;
+    color: #555;
+    padding: 10px 25px;
+    height: 45px;
+    border-radius: 30px;
+    flex: 1;
+    margin-right: 16px;
+    font-size: 18px;
+    font-family: Comfortaa ;
+}
+
+.search button {
+   border: 0;
+   outline: 0;
+   background: #ebfffc;
+   border-radius: 25px;
+   width: 45px;
+   height: 45px;
+   cursor: pointer;
+}
+
+.button-icon {
+    font-size: 25px; /* Adjust icon's height */
+    line-height: 1; /* Set height between top-n-bottom lines of text or box*/
+    color:#5b548a;
+}
+
+.cityDT {
+    font-size: small;
+    text-align: center;
+}
+
+.city {
+    margin: 0; /* Adjust top and bottom margins */
+    font-size: 30px;
+    text-align: center;
+}
+
+.iconImage{
+    text-align:right;
+}
+
+.table-temp table {
+    margin-top: 5px;
+    margin-left: 10px;
+    border-collapse: collapse;
+    width: 300px;
+}
+
+.table-temp td{        /* temporary making border to table */
+    border: 0px solid black;
+}
+
+.temp-row {
+    padding-top: 5px;
+    letter-spacing: -2px;
+    height: 30px;
+}
+
+.temp {
+    font-size: 50px;
+    line-height: 50px;
+}
+
+.deg {
+    vertical-align:top;
+    font-size: 20px;
+    line-height: 25px;
+}
+
+.description {
+    vertical-align: top;
+    text-align:left;
+}
+
+.details table {
+    margin-left: 10px;
+    border-collapse: collapse;
+    width:300px;
+}
+
+.details tr {
+    border-top: 1px solid darkslateblue; /* Show a top border for each row */
+}
+
+.details td {
+    padding: 10px;
+    text-align: left;
+}
+
+.desc_icon{
+    width: 25px;
+    height: auto;
+}
+

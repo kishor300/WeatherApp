@@ -1,0 +1,288 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" /> 
+    <title>Weather App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
+    <!-- loading icon library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .loading-overlay {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 9999;
+        }
+    
+        .loader-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+    
+        .loader {
+            width: 8px;
+            height: 40px;
+            border-radius: 4px;
+            display: block;
+            margin: 20px auto;
+            position: relative;
+            background: currentColor;
+            color: #FFF;
+            box-sizing: border-box;
+            animation: animloader 0.3s 0.3s linear infinite alternate;
+        }
+    
+        .loader::after,
+        .loader::before {
+            content: '';
+            width: 8px;
+            height: 40px;
+            border-radius: 4px;
+            background: currentColor;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 20px;
+            box-sizing: border-box;
+            animation: animloader 0.3s 0.45s linear infinite alternate;
+        }
+    
+        .loader::before {
+            left: -20px;
+            animation-delay: 0s;
+        }
+    
+        .loading-text {
+            color: white;
+            font-family: comfortaa;
+            font-size: 20px;
+            position: fixed;
+            top: 43%;
+            transform: translateY(-50%);
+            z-index: 10000;
+        }
+    
+        @keyframes animloader {
+            0% {
+                height: 48px
+            }
+            100% {
+                height: 4px
+            }
+        }
+    </style>
+    
+  </head>
+
+  <body>
+
+    <div class="loading-overlay">
+        <div class="loading-text">Loading Weather</div>
+        <div class="loader-container">
+            <div class="loader"></div>
+        </div>
+    </div>
+    <script>
+        // 2-second delay before showing the content
+        setTimeout(function() {
+            document.querySelector('.loading-overlay').style.display = 'none';
+        }, 2000);
+    </script>
+
+
+    <!-- Script to get user's current lat,lon -->
+    <script>
+        // Check if geolocation is supported in the browser
+        if (navigator.geolocation) {
+            // Use the geolocation API to get the user's location
+            navigator.geolocation.getCurrentPosition(async function(position) {
+                try {
+                    var latitude = position.coords.latitude;
+                    var longitude = position.coords.longitude;
+    
+                    // Creating a JSON object to send to the server
+                    const loc = { latitude, longitude };
+    
+                    // Send the `loc` object to the server using the fetch API
+                    const response = await fetch('/', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(loc)
+                    });
+    
+                    if (response.ok) {
+
+                        const data = await response.json();
+
+                        // Update the HTML elements with the received data
+                        const cityDT = document.getElementById("cityDT");
+                        const cityElement = document.getElementById("city");
+                        const countryElement = document.getElementById("country");
+                        const temperatureElement = document.getElementById("temperature");
+                        const descriptionElement = document.getElementById("description");
+                        const humidityElement = document.getElementById("humidity");
+                        const visibilityElement = document.getElementById("visibility");
+                        const windSpeedElement = document.getElementById("wind-speed");
+                        const windDirectionElement = document.getElementById("wind-direction");
+                        const weatherIconElement = document.getElementById("weatherIcon");
+                        
+                        cityDT.textContent = data.cityDateTime;
+                        cityElement.textContent = data.cityName;
+                        countryElement.textContent = data.country;
+                        temperatureElement.textContent = data.temp;
+                        descriptionElement.textContent = data.description;
+                        humidityElement.textContent = data.humidity;
+                        visibilityElement.textContent = data.visibility;
+                        windSpeedElement.textContent = data.windSpeed;
+                        windDirectionElement.textContent = data.winddeg;
+
+                        // Update the weather icon
+                        const iconUrl = `https://openweathermap.org/img/wn/${data.iconId}@2x.png`;
+                        weatherIconElement.setAttribute("src", iconUrl);
+
+                    } else {
+                        console.error('Error while sending location to the server:', response.status);
+                    }
+                } catch (error) {
+                    console.error('Error during geolocation and fetch:', error);
+                }
+            }, function error(msg) {
+                alert('Please enable your GPS position feature.');
+            }, { enableHighAccuracy: true });
+        } else {
+            alert("Geolocation API is not supported in your browser.");
+        }
+    </script>
+
+
+    <div class="container">
+        <div class="search">
+            <form id="myForm">
+                <input type="text" placeholder="Enter City" name="cityName">
+                <button type="submit" class="button-icon"><i class="fa fa-search"></i></button>
+            </form>
+        </div>
+
+            <div class="table-temp">
+                <table>
+                    <tr>
+                        <td colspan="2" class="cityDT"> 
+                            <span id="cityDT" ></span> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="city"> 
+                            <span id="city"></span>, <span id="country"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2" class="iconImage"> 
+                            <img src="" id="weatherIcon" alt="temp-icon">
+                        </td>
+                        <td class="temp-row"> 
+                            <span class="temp" id="temperature"></span> <span class="deg">&deg;C</span> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="description">
+                            <span id="description"></span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="details">
+                <table>
+                    <tr class="detail">
+                        <td> <img src="/images/humidity.png" class="desc_icon" alt="humidity-icon"> </td> 
+                        <td class="label">Humidity</td>
+                        
+                        <td class="value"> <span id="humidity"></span> %</td>
+                    </tr>
+                    <tr class="detail">
+                        <td> <img src="/images/visibility.png" class="desc_icon"> </td>
+                        <td class="label">Visibility</td>
+                        <td class="value"> <span id="visibility"></span>  km</td>
+                    </tr>
+                    <tr class="detail">
+                        <td> <img src="/images/windspeed.png" class="desc_icon"> </td>
+                        <td class="label">Wind Speed</td>
+                        <td class="value"> <span id="wind-speed"></span>  km/h</td>
+                    </tr>
+                    <tr class="detail">
+                        <td> <img src="/images/direction.png" class="desc_icon"> </td>
+                        <td class="label">Wind Direction</td>
+                        <td class="value"> <span id="wind-direction"></span> °</td>
+                    </tr>
+                </table>
+            </div>
+
+    </div>
+    
+    <!-- Script to handle the form submission and display the weather of city entered by user -->
+    <script>
+        document.getElementById('myForm').addEventListener('submit', (event) => {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const jsonData = {};
+            formData.forEach((value, key) => {
+                jsonData[key] = value;
+            });
+
+            console.log('* jsonData * :',jsonData);
+            
+            fetch('/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(jsonData),
+            })
+            .then(response => response.json())
+            .then(data => {
+                
+                console.log('Form Data :',data);
+
+                // Update the HTML elements with the received data
+                const cityDT = document.getElementById("cityDT");
+                const cityElement = document.getElementById("city");
+                const countryElement = document.getElementById("country");
+                const temperatureElement = document.getElementById("temperature");
+                const descriptionElement = document.getElementById("description");
+                const humidityElement = document.getElementById("humidity");
+                const visibilityElement = document.getElementById("visibility");
+                const windSpeedElement = document.getElementById("wind-speed");
+                const windDirectionElement = document.getElementById("wind-direction");
+                const weatherIconElement = document.getElementById("weatherIcon");
+
+                cityDT.textContent = data.cityDateTime;
+                cityElement.textContent = data.cityName;
+                countryElement.textContent = data.country;
+                temperatureElement.textContent = data.temp;
+                descriptionElement.textContent = data.description;
+                humidityElement.textContent = data.humidity;
+                visibilityElement.textContent = data.visibility;
+                windSpeedElement.textContent = data.windSpeed;
+                windDirectionElement.textContent = data.winddeg;
+
+                // Update the weather icon
+                const iconUrl = `https://openweathermap.org/img/wn/${data.iconId}@2x.png`;
+                weatherIconElement.setAttribute("src", iconUrl);
+
+            })
+            .catch(error => console.error(error));
+        });
+    </script>
+  
+  </body>
+</html>
