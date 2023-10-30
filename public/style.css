@@ -1,5 +1,12 @@
-body {
-    background: #222;
+
+.permission-msg {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+    font-family: 'consolas';
+    font-size: 24px;
 }
 
 .container {
