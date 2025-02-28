@@ -1,4 +1,4 @@
-//-------------------------- Importing Packages/Variables ---------------------------------------------------------------------------
+//-------------------------- Importing Packages/Variables ----------------
 const express = require('express');
 const app = express();
 
@@ -10,38 +10,39 @@ const weatherApiKey = process.env.weatherApiKey;    // getting apiKey from .env 
 const locApiKey = process.env.locApiKey;
 
 const path = require('path');
-//-------------------------- Middleware ---------------------------------------------------------------------------
+//-------------------------- Middleware ---------------------------------
 
-app.use(express.urlencoded({extended:true}));   //to get the html form data
+app.use(express.urlencoded({ extended: true }));   //to get the html form data
 
-app.use(express.static(path.join(__dirname,'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 
-//-------------------------- API Design ----------------------------------------------------------------------------------
+//-------------------------- API Design ---------------------------------
 
-app.get('/',(req,res)=>{
+app.get('/', (req, res) => {
 
     res.sendFile(__dirname + '/public/index.html');
 
 });
 
-async function getLoc(lat,lon){
+async function getLoc(lat, lon) {
 
-    try{
+    try {
 
         const url_latlon = `https://api.geoapify.com/v1/geocode/reverse?lat=${lat}&lon=${lon}&apiKey=${locApiKey}`;
-        
+        // https://api.geoapify.com/v1/geocode/reverse?lat=17.1473622&lon=73.382647&apiKey=40d68c1448e54b76ad3023f180ed5b49
+
         const response = await axios.get(url_latlon);
 
-        let locationData = response.data;   // Storing data received in response by using 'response.data'.  It is compulsory.
-        
-        const city = locationData.features[0].properties.city;
+        let locationData = response.data;   // Storing data received in response by using 'response.data'. It is compulsory.
+
+        const city = locationData.features[0].properties.county.split(" ")[0];
 
         console.log("City: ", city);
 
         return city;
 
-    }catch(error){
+    } catch (error) {
 
         console.log('An error occurred while fetching location in getLoc function.', error);
         throw error;
@@ -49,7 +50,7 @@ async function getLoc(lat,lon){
 
 }
 
-function getCityDT(cityTimeStamp){
+function getCityDT(cityTimeStamp) {
 
     const timestamp = cityTimeStamp * 1000; // Convert the timestamp to milliseconds
 
@@ -60,46 +61,47 @@ function getCityDT(cityTimeStamp){
     const time = date.toLocaleString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
 
     const formattedDate = `${day} ${month}, ${time}`;
-    
+
     return formattedDate;
 }
 
-async function getCityWeather(city){
+async function getCityWeather(city) {
 
-    try{
+    try {
 
         const url_loc = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${weatherApiKey}&units=metric`;
-        
+        // https://api.openweathermap.org/data/2.5/weather?lat=17.14&lon=73.38&appid=3a74adbbbe9b2eac7cab074fc6249407&units=metric
+
         const response = await axios.get(url_loc);
 
-        const weatherData = response.data;  
+        const weatherData = response.data;
         /*  
             Storing data received in response by using 'response.data'.  It is compulsory.
             Axios responses are already served as javascript object, no need to parse
         */
 
         const cityTimeStamp = weatherData.dt;
-        console.log('Current City Timestamp :',cityTimeStamp);
+        console.log('Current City Timestamp :', cityTimeStamp);
         const cityDateTime = getCityDT(cityTimeStamp);
-        console.log('Current City Date Time :',cityDateTime);
+        console.log('Current City Date Time :', cityDateTime);
 
         const iconId = weatherData.weather[0].icon;
-        const temp = Math.round( weatherData.main.temp );
+        const temp = Math.round(weatherData.main.temp);
         const cityName = weatherData.name;
         const country = weatherData.sys.country;
         const description = weatherData.weather[0].description;
 
         const humidity = weatherData.main.humidity;
-        const visibility = (weatherData.visibility)/1000;   // converting from m to km
-        const windSpeed = ( (weatherData.wind.speed)*3.6 ).toFixed(2);   // converting m/s to km/h  //.toFixed() method taked only 2 digits afte decimal
+        const visibility = (weatherData.visibility) / 1000;   // converting from m to km
+        const windSpeed = ((weatherData.wind.speed) * 3.6).toFixed(2);   // converting m/s to km/h  //.toFixed() method taked only 2 digits afte decimal
         const winddeg = weatherData.wind.deg;
 
-        console.log('\n\n iconId is '+iconId+'\n\n' );
-        console.log('\n\n description is '+description+'\n\n' );
-        
-        const WRAP_DATA = { 
+        console.log('\n\n iconId is ' + iconId + '\n\n');
+        console.log('\n\n description is ' + description + '\n\n');
+
+        const WRAP_DATA = {
             cityDateTime,
-            iconId, 
+            iconId,
             temp,
             cityName,
             country,
@@ -112,7 +114,7 @@ async function getCityWeather(city){
 
         return WRAP_DATA;
 
-    }catch(error){
+    } catch (error) {
 
         console.log('An error occurred while fetching weather in getCityWeather function.', error);
         throw error;
@@ -121,94 +123,94 @@ async function getCityWeather(city){
 }
 
 
-app.post('/', async(req,res)=>{                // async (callbacks_req_res)=>{..}
+app.post('/', async (req, res) => {                // async (callbacks_req_res)=>{..}
 
     if (typeof req.body.latitude !== 'undefined') {
-        
+
         try {
-        
+
             // Step-1] Get the current city using lat,lon //We are using geoapify-API for getting city usin lat,lon because openWeather-API gives accurate city by lat,lon
-    
-                const result = req.body;        // getting user current location to featch weather.
-                const lon = result.longitude;
-                const lat = result.latitude;  
-    
-                console.log('my lon =',lon,'my lat = ',lat);
-    
-                let currentCity = await getLoc(lat,lon);    // calling getLoc function
-                
-                // trail data
-                // let currentCity = 'Delhi';
-                
-                console.log('Current City = ',currentCity);
-    
-            // Step-2] Get the current weather using city
-    
-                let WRAP_DATA = await getCityWeather(currentCity);    // calling getCityWeather function
-    
-                // trail data
-                // let WRAP_DATA = {
-                //     cityDateTime: '29 Oct, 02:07 AM',
-                //     iconId: '10d',
-                //     temp: 24,
-                //     cityName: 'Delhi',
-                //     country: 'IN',
-                //     description: 'clear sky',
-                //     humidity: 38,
-                //     visibility: 10,
-                //     windSpeed: 1.116,
-                //     winddeg: 268
-                // }
 
-                console.log('\n\n1) Weather Info = ', WRAP_DATA);
-                
-                res.json(WRAP_DATA);
-    
-                // res.render('index.ejs',{data:WRAP_DATA});    // sending all weather related dynamic data to index.hbs to display values
-    
+            const result = req.body;        // getting user current location to featch weather.
+            const lon = result.longitude;
+            const lat = result.latitude;
+
+            console.log('my lon =', lon, 'my lat = ', lat);
+
+            let currentCity = await getLoc(lat, lon);    // calling getLoc function
+
+            // trail data
+            // let currentCity = 'Delhi';
+
+            console.log('Current City = ', currentCity);
+
+            // Step-2] Get the current weather using city
+
+            let WRAP_DATA = await getCityWeather(currentCity);    // calling getCityWeather function
+
+            // trail data
+            // let WRAP_DATA = {
+            //     cityDateTime: '29 Oct, 02:07 AM',
+            //     iconId: '10d',
+            //     temp: 24,
+            //     cityName: 'Delhi',
+            //     country: 'IN',
+            //     description: 'clear sky',
+            //     humidity: 38,
+            //     visibility: 10,
+            //     windSpeed: 1.116,
+            //     winddeg: 268
+            // }
+
+            console.log('\n\n1) Weather Info = ', WRAP_DATA);
+
+            res.json(WRAP_DATA);
+
+            // res.render('index.ejs',{data:WRAP_DATA});    // sending all weather related dynamic data to index.hbs to display values
+
         } catch (error) {
-    
+
             console.error(error);
             res.status(500).send('An error occurred while fetching weather data. Try again!');
         }
 
-    } else if(typeof req.body.cityName !=='undefined'){
+    } else if (typeof req.body.cityName !== 'undefined') {
 
         try {
-        
-            // Step-1] Get the current weather using city
-    
-                const cityName = req.body.cityName; // getting city name from user
-                
-                let WRAP_DATA = await getCityWeather(cityName);    // calling getCityWeather function
-    
-                console.log('2) Weather Info = ',WRAP_DATA);
-    
-                res.json( WRAP_DATA );
 
-                // res.render('index.hbs', {WRAP_DATA});    // sending all weather related dynamic data to index.hbs to display values
-    
+            // Step-1] Get the current weather using city
+
+            const cityName = req.body.cityName; // getting city name from user
+
+            let WRAP_DATA = await getCityWeather(cityName);    // calling getCityWeather function
+
+            console.log('2) Weather Info = ', WRAP_DATA);
+
+            res.json(WRAP_DATA);
+
+            // res.render('index.hbs', {WRAP_DATA});    // sending all weather related dynamic data to index.hbs to display values
+
         } catch (error) {
-    
+
             console.error(error);
             res.status(500).send('An error occurred while fetching weather data. Try again!');
         }
 
-    }else {
-        
+    } else {
+
         res.status('400').send('Bad Request: Missing location and cityName in request');
     }
-    
+
 });
 
 
-//-------------------------- Creating Server ---------------------------------------------------------------------------
+//-------------------------- Creating Server ---------------------
 
 let port = 5000;
-app.listen(port,(err)=>{
-    if(err){
+app.listen(port, (err) => {
+    if (err) {
         console.log(err);
-    }else{
+    } else {
         console.log(`Server is listening on port ${port}`);
     }
 })

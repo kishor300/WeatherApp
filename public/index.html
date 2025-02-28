@@ -1,6 +1,7 @@
 <html lang="en">
-  <head>
-    <meta charset="utf-8" /> 
+
+<head>
+    <meta charset="utf-8" />
     <title>Weather App</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 
@@ -21,14 +22,14 @@
             background-color: rgba(0, 0, 0, 0.7);
             z-index: 9999;
         }
-    
+
         .loader-container {
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
         }
-    
+
         .loader {
             width: 8px;
             height: 40px;
@@ -41,7 +42,7 @@
             box-sizing: border-box;
             animation: animloader 0.3s 0.3s linear infinite alternate;
         }
-    
+
         .loader::after,
         .loader::before {
             content: '';
@@ -56,12 +57,12 @@
             box-sizing: border-box;
             animation: animloader 0.3s 0.45s linear infinite alternate;
         }
-    
+
         .loader::before {
             left: -20px;
             animation-delay: 0s;
         }
-    
+
         .loading-text {
             color: white;
             font-family: comfortaa;
@@ -71,20 +72,21 @@
             transform: translateY(-50%);
             z-index: 10000;
         }
-    
+
         @keyframes animloader {
             0% {
                 height: 48px
             }
+
             100% {
                 height: 4px
             }
         }
     </style>
-    
-  </head>
 
-  <body>
+</head>
+
+<body>
 
     <div id="permission-overlay">
         <p class="permission-msg">Weather App waiting for your location. Please allow access to your location...</p>
@@ -99,60 +101,60 @@
                     <button type="submit" class="button-icon"><i class="fa fa-search"></i></button>
                 </form>
             </div>
-    
-                <div class="table-temp">
-                    <table>
-                        <tr>
-                            <td colspan="2" class="cityDT"> 
-                                <span id="cityDT" ></span> 
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2" class="city"> 
-                                <span id="city"></span>, <span id="country"></span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td rowspan="2" class="iconImage"> 
-                                <img src="" id="weatherIcon" alt="temp-icon">
-                            </td>
-                            <td class="temp-row"> 
-                                <span class="temp" id="temperature"></span> <span class="deg">&deg; C</span> 
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="description">
-                                <span id="description"></span>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-    
-                <div class="details">
-                    <table>
-                        <tr class="detail">
-                            <td> <img src="/images/humidity.png" class="desc_icon" alt="humidity-icon"> </td> 
-                            <td class="label">Humidity</td>
-                            
-                            <td class="value"> <span id="humidity"></span> %</td>
-                        </tr>
-                        <tr class="detail">
-                            <td> <img src="/images/visibility.png" class="desc_icon"> </td>
-                            <td class="label">Visibility</td>
-                            <td class="value"> <span id="visibility"></span>  km</td>
-                        </tr>
-                        <tr class="detail">
-                            <td> <img src="/images/windspeed.png" class="desc_icon"> </td>
-                            <td class="label">Wind Speed</td>
-                            <td class="value"> <span id="wind-speed"></span>  km/h</td>
-                        </tr>
-                        <tr class="detail">
-                            <td> <img src="/images/direction.png" class="desc_icon"> </td>
-                            <td class="label">Wind Direction</td>
-                            <td class="value"> <span id="wind-direction"></span> °</td>
-                        </tr>
-                    </table>
-                </div>
+
+            <div class="table-temp">
+                <table>
+                    <tr>
+                        <td colspan="2" class="cityDT">
+                            <span id="cityDT"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="city">
+                            <span id="city"></span>, <span id="country"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2" class="iconImage">
+                            <img src="" id="weatherIcon" alt="temp-icon">
+                        </td>
+                        <td class="temp-row">
+                            <span class="temp" id="temperature"></span> <span class="deg">&deg; C</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="description">
+                            <span id="description"></span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="details">
+                <table>
+                    <tr class="detail">
+                        <td> <img src="/images/humidity.png" class="desc_icon" alt="humidity-icon"> </td>
+                        <td class="label">Humidity</td>
+
+                        <td class="value"> <span id="humidity"></span> %</td>
+                    </tr>
+                    <tr class="detail">
+                        <td> <img src="/images/visibility.png" class="desc_icon"> </td>
+                        <td class="label">Visibility</td>
+                        <td class="value"> <span id="visibility"></span> km</td>
+                    </tr>
+                    <tr class="detail">
+                        <td> <img src="/images/windspeed.png" class="desc_icon"> </td>
+                        <td class="label">Wind Speed</td>
+                        <td class="value"> <span id="wind-speed"></span> km/h</td>
+                    </tr>
+                    <tr class="detail">
+                        <td> <img src="/images/direction.png" class="desc_icon"> </td>
+                        <td class="label">Wind Direction</td>
+                        <td class="value"> <span id="wind-direction"></span> °</td>
+                    </tr>
+                </table>
+            </div>
         </div>
 
         <div class="loading-overlay">
@@ -163,7 +165,7 @@
         </div>
 
     </div>
-    
+
     <!-- Script to get user's current lat,lon -->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -224,12 +226,12 @@
                             content.style.display = "block";
                             var body = document.body;
                             body.style.background = "#222";
-                        
+
                             // few seconds delay for fetching the weather
-                            setTimeout(function() {
+                            setTimeout(function () {
                                 document.querySelector('.loading-overlay').style.display = 'none';
                             }, 1500);
-                        
+
                         } else {
                             console.error('Error while sending location to the server:', response.status);
                         }
@@ -256,8 +258,8 @@
                 jsonData[key] = value;
             });
 
-            console.log('* jsonData * :',jsonData);
-            
+            // console.log('* jsonData * :',jsonData);
+
             fetch('/', {
                 method: 'POST',
                 headers: {
@@ -265,41 +267,42 @@
                 },
                 body: JSON.stringify(jsonData),
             })
-            .then(response => response.json())
-            .then(data => {
-                
-                console.log('Form Data :',data);
+                .then(response => response.json())
+                .then(data => {
 
-                // Update the HTML elements with the received data
-                const cityDT = document.getElementById("cityDT");
-                const cityElement = document.getElementById("city");
-                const countryElement = document.getElementById("country");
-                const temperatureElement = document.getElementById("temperature");
-                const descriptionElement = document.getElementById("description");
-                const humidityElement = document.getElementById("humidity");
-                const visibilityElement = document.getElementById("visibility");
-                const windSpeedElement = document.getElementById("wind-speed");
-                const windDirectionElement = document.getElementById("wind-direction");
-                const weatherIconElement = document.getElementById("weatherIcon");
+                    // console.log('Form Data :',data);
 
-                cityDT.textContent = data.cityDateTime;
-                cityElement.textContent = data.cityName;
-                countryElement.textContent = data.country;
-                temperatureElement.textContent = data.temp;
-                descriptionElement.textContent = data.description;
-                humidityElement.textContent = data.humidity;
-                visibilityElement.textContent = data.visibility;
-                windSpeedElement.textContent = data.windSpeed;
-                windDirectionElement.textContent = data.winddeg;
+                    // Update the HTML elements with the received data
+                    const cityDT = document.getElementById("cityDT");
+                    const cityElement = document.getElementById("city");
+                    const countryElement = document.getElementById("country");
+                    const temperatureElement = document.getElementById("temperature");
+                    const descriptionElement = document.getElementById("description");
+                    const humidityElement = document.getElementById("humidity");
+                    const visibilityElement = document.getElementById("visibility");
+                    const windSpeedElement = document.getElementById("wind-speed");
+                    const windDirectionElement = document.getElementById("wind-direction");
+                    const weatherIconElement = document.getElementById("weatherIcon");
 
-                // Update the weather icon
-                const iconUrl = `https://openweathermap.org/img/wn/${data.iconId}@2x.png`;
-                weatherIconElement.setAttribute("src", iconUrl);
+                    cityDT.textContent = data.cityDateTime;
+                    cityElement.textContent = data.cityName;
+                    countryElement.textContent = data.country;
+                    temperatureElement.textContent = data.temp;
+                    descriptionElement.textContent = data.description;
+                    humidityElement.textContent = data.humidity;
+                    visibilityElement.textContent = data.visibility;
+                    windSpeedElement.textContent = data.windSpeed;
+                    windDirectionElement.textContent = data.winddeg;
 
-            })
-            .catch(error => console.error(error));
+                    // Update the weather icon
+                    const iconUrl = `https://openweathermap.org/img/wn/${data.iconId}@2x.png`;
+                    weatherIconElement.setAttribute("src", iconUrl);
+
+                })
+                .catch(error => console.error(error));
         });
     </script>
-  
-  </body>
+
+</body>
+
 </html>
