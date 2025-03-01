@@ -81,9 +81,9 @@ async function getCityWeather(city) {
         */
 
         const cityTimeStamp = weatherData.dt;
-        console.log('Current City Timestamp :', cityTimeStamp);
+        // console.log('Current City Timestamp :', cityTimeStamp);
         const cityDateTime = getCityDT(cityTimeStamp);
-        console.log('Current City Date Time :', cityDateTime);
+        // console.log('Current City Date Time :', cityDateTime);
 
         const iconId = weatherData.weather[0].icon;
         const temp = Math.round(weatherData.main.temp);
@@ -96,8 +96,8 @@ async function getCityWeather(city) {
         const windSpeed = ((weatherData.wind.speed) * 3.6).toFixed(2);   // converting m/s to km/h  //.toFixed() method taked only 2 digits afte decimal
         const winddeg = weatherData.wind.deg;
 
-        console.log('\n\n iconId is ' + iconId + '\n\n');
-        console.log('\n\n description is ' + description + '\n\n');
+        // console.log('\n\n iconId is ' + iconId + '\n\n');
+        // console.log('\n\n description is ' + description + '\n\n');
 
         const WRAP_DATA = {
             cityDateTime,
@@ -162,7 +162,7 @@ app.post('/', async (req, res) => {                // async (callbacks_req_res)=
             //     winddeg: 268
             // }
 
-            console.log('\n\n1) Weather Info = ', WRAP_DATA);
+            // console.log('\n\n1) Weather Info = ', WRAP_DATA);
 
             res.json(WRAP_DATA);
 
@@ -184,7 +184,7 @@ app.post('/', async (req, res) => {                // async (callbacks_req_res)=
 
             let WRAP_DATA = await getCityWeather(cityName);    // calling getCityWeather function
 
-            console.log('2) Weather Info = ', WRAP_DATA);
+            // console.log('2) Weather Info = ', WRAP_DATA);
 
             res.json(WRAP_DATA);
 

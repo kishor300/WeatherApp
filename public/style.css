@@ -1,3 +1,13 @@
+body {
+    margin: 0;
+    padding: 0;
+    height: 90vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
 .permission-msg {
 
@@ -10,14 +20,15 @@
 }
 
 .container {
-    width: fit-content;
-    margin: 30px auto 0;
+    width: 80vw;
+    padding: 15px 15px;
+    box-sizing: border-box;
     text-align: center;
     border-radius: 20px;
-    padding: 40px 35px;
     background: linear-gradient(135deg, #00feba, #5b548a);
     color: #fff;
-    font-family: Comfortaa ;  /* Rockwell */
+    font-family: Comfortaa;
+    /* Rockwell */
 }
 
 .search {
@@ -27,34 +38,59 @@
     justify-content: space-between;
 }
 
+@media only screen and (min-width: 481px) {
+
+    .container {
+        width: 50vw;
+    }
+}
+
+@media only screen and (min-width: 1025px) {
+
+    .container {
+        width: 25vw;
+    }
+}
+
 .search input {
     border: 0;
     outline: 0;
     background: #ebfffc;
     color: #555;
-    padding: 10px 25px;
+    padding: 10px 20px;
     height: 45px;
     border-radius: 30px;
-    flex: 1;
-    margin-right: 16px;
     font-size: 18px;
-    font-family: Comfortaa ;
+    width: 80%;
 }
 
 .search button {
-   border: 0;
-   outline: 0;
-   background: #ebfffc;
-   border-radius: 25px;
-   width: 45px;
-   height: 45px;
-   cursor: pointer;
+    border: 0;
+    outline: 0;
+    background: #ebfffc;
+    border-radius: 25px;
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
 }
 
 .button-icon {
-    font-size: 25px; /* Adjust icon's height */
-    line-height: 1; /* Set height between top-n-bottom lines of text or box*/
-    color:#5b548a;
+    font-size: 25px;
+    /* Adjust icon's height */
+    line-height: 1;
+    /* Set height between top-n-bottom lines of text or box*/
+    color: #5b548a;
+}
+
+/* Temperature Table */
+.table-temp {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.table-temp td {
+    /* temporary making border to table */
+    border: 0px solid black;
 }
 
 .cityDT {
@@ -63,24 +99,14 @@
 }
 
 .city {
-    margin: 0; /* Adjust top and bottom margins */
+    margin: 0;
+    /* Adjust top and bottom margins */
     font-size: 30px;
     text-align: center;
 }
 
-.iconImage{
-    text-align:right;
-}
-
-.table-temp table {
-    margin-top: 5px;
-    margin-left: 10px;
-    border-collapse: collapse;
-    width: 300px;
-}
-
-.table-temp td{        /* temporary making border to table */
-    border: 0px solid black;
+.iconImage {
+    text-align: right;
 }
 
 .temp-row {
@@ -95,24 +121,25 @@
 }
 
 .deg {
-    vertical-align:top;
+    vertical-align: top;
     font-size: 20px;
     line-height: 25px;
 }
 
 .description {
     vertical-align: top;
-    text-align:left;
+    text-align: left;
 }
 
-.details table {
-    margin-left: 10px;
+/* Details Table */
+.details {
     border-collapse: collapse;
-    width:300px;
+    width: 100%;
 }
 
 .details tr {
-    border-top: 1px solid darkslateblue; /* Show a top border for each row */
+    border-top: 1px solid darkslateblue;
+    /* Show a top border for each row */
 }
 
 .details td {
@@ -120,8 +147,7 @@
     text-align: left;
 }
 
-.desc_icon{
+.desc_icon {
     width: 25px;
     height: auto;
 }
-

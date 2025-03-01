@@ -95,66 +95,63 @@
     <div id="content" style="display: none;">
 
         <div class="container">
-            <div class="search">
-                <form id="myForm">
-                    <input type="text" placeholder="Enter City" name="cityName">
-                    <button type="submit" class="button-icon"><i class="fa fa-search"></i></button>
-                </form>
-            </div>
 
-            <div class="table-temp">
-                <table>
-                    <tr>
-                        <td colspan="2" class="cityDT">
-                            <span id="cityDT"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" class="city">
-                            <span id="city"></span>, <span id="country"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td rowspan="2" class="iconImage">
-                            <img src="" id="weatherIcon" alt="temp-icon">
-                        </td>
-                        <td class="temp-row">
-                            <span class="temp" id="temperature"></span> <span class="deg">&deg; C</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="description">
-                            <span id="description"></span>
-                        </td>
-                    </tr>
-                </table>
-            </div>
+            <form id="myForm" class="search">
+                <input type="text" placeholder="City" name="cityName">
+                <button type="submit" class="button-icon"><i class="fa fa-search"></i></button>
+            </form>
+            <!-- Temperature Table  -->
+            <table class="table-temp">
+                <tr>
+                    <td colspan="2" class="cityDT">
+                        <span id="cityDT"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="city">
+                        <span id="city"></span>, <span id="country"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td rowspan="2" class="iconImage">
+                        <img src="" id="weatherIcon" alt="temp-icon">
+                    </td>
+                    <td class="temp-row">
+                        <span class="temp" id="temperature"></span> <span class="deg">&deg; C</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="description">
+                        <span id="description"></span>
+                    </td>
+                </tr>
+            </table>
 
-            <div class="details">
-                <table>
-                    <tr class="detail">
-                        <td> <img src="/images/humidity.png" class="desc_icon" alt="humidity-icon"> </td>
-                        <td class="label">Humidity</td>
+            <!-- Details Table -->
+            <table class="details">
+                <tr class="detail">
+                    <td> <img src="/images/humidity.png" class="desc_icon" alt="humidity-icon"> </td>
+                    <td class="label">Humidity</td>
 
-                        <td class="value"> <span id="humidity"></span> %</td>
-                    </tr>
-                    <tr class="detail">
-                        <td> <img src="/images/visibility.png" class="desc_icon"> </td>
-                        <td class="label">Visibility</td>
-                        <td class="value"> <span id="visibility"></span> km</td>
-                    </tr>
-                    <tr class="detail">
-                        <td> <img src="/images/windspeed.png" class="desc_icon"> </td>
-                        <td class="label">Wind Speed</td>
-                        <td class="value"> <span id="wind-speed"></span> km/h</td>
-                    </tr>
-                    <tr class="detail">
-                        <td> <img src="/images/direction.png" class="desc_icon"> </td>
-                        <td class="label">Wind Direction</td>
-                        <td class="value"> <span id="wind-direction"></span> °</td>
-                    </tr>
-                </table>
-            </div>
+                    <td class="value"> <span id="humidity"></span> %</td>
+                </tr>
+                <tr class="detail">
+                    <td> <img src="/images/visibility.png" class="desc_icon"> </td>
+                    <td class="label">Visibility</td>
+                    <td class="value"> <span id="visibility"></span> km</td>
+                </tr>
+                <tr class="detail">
+                    <td> <img src="/images/windspeed.png" class="desc_icon"> </td>
+                    <td class="label">Wind Speed</td>
+                    <td class="value"> <span id="wind-speed"></span> km/h</td>
+                </tr>
+                <tr class="detail">
+                    <td> <img src="/images/direction.png" class="desc_icon"> </td>
+                    <td class="label">Wind Direction</td>
+                    <td class="value"> <span id="wind-direction"></span> °</td>
+                </tr>
+            </table>
+
         </div>
 
         <div class="loading-overlay">
