@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 
     <!-- loading icon library -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 
     <style>
@@ -89,7 +90,12 @@
 <body>
 
     <div id="permission-overlay">
-        <p class="permission-msg">Weather App waiting for your location. Please allow access to your location...</p>
+        <p>Getting your location...</p>
+        <p id="req">
+            <span><i class="fa-solid fa-circle-info"></i>
+            </span>
+            GPS access required !
+        </p>
     </div>
 
     <div id="content" style="display: none;">
